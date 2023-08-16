@@ -94,6 +94,11 @@ margin-bottom: 15px;
 line-height: 20px;
 font-size: 14px;
 color: #969696;
+.zoom{
+    float: right;
+    width: 18px;
+    padding-top: 2px;
+}
 `
 
 export const SearchInfoSwitch = styled.span`
