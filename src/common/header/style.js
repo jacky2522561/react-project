@@ -104,6 +104,7 @@ color: #969696;
 export const SearchInfoSwitch = styled.span`
 float: right;
 font-size: 13px;
+cursor: pointer;
 `
 export const SearchInfoList = styled.div`
 overflow: hidden;

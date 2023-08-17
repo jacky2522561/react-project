@@ -16,16 +16,16 @@ import {
 } from './style';
 import { CSSTransition } from "react-transition-group";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faMagnifyingGlass,faArrowsRotate } from '@fortawesome/free-solid-svg-icons';
+import { faMagnifyingGlass, faArrowsRotate } from '@fortawesome/free-solid-svg-icons';
 import { connect } from "react-redux";
-import { searchFocus, searchBlur, getList, MouseEnter, MouseLeave,ChangePage } from "./store/actioncreators";
+import { searchFocus, searchBlur, getList, MouseEnter, MouseLeave, ChangePage } from "./store/actioncreators";
 
 class Header extends Component {
     getListArea() {
-        const { list, page, mouseIn, focused,totalPage, handleMouseEnter, handleMouseLeave,handleChangePage } = this.props;
+        const { list, page, mouseIn, focused, totalPage, handleMouseEnter, handleMouseLeave, handleChangePage } = this.props;
         const jslist = list.toJS();
         const pagelist = [];
-        if(jslist.length){
+        if (jslist.length) {
             for (let i = (page - 1) * 7; i < page * 7; i++) {
                 pagelist.push(<SearchInfoItem key={i}>{jslist[i]}</SearchInfoItem>)
             }
@@ -38,10 +38,10 @@ class Header extends Component {
                 >
                     <SearchInfoTitle>
                         熱門搜尋
-                        <SearchInfoSwitch onClick={()=>handleChangePage(page,totalPage)}>
+                        <SearchInfoSwitch onClick={() => handleChangePage(page, totalPage)}>
                             更新
                         </SearchInfoSwitch>
-                        <FontAwesomeIcon icon={faArrowsRotate} className="zoom"/>
+                        <FontAwesomeIcon icon={faArrowsRotate} className="zoom" />
                     </SearchInfoTitle>
                     <SearchInfoList>
                         {pagelist}
@@ -53,7 +53,7 @@ class Header extends Component {
         }
     }
     render() {
-        const { handleinputblur, handleInputFocus, focused } = this.props;
+        const { handleinputblur, handleInputFocus, focused, list } = this.props;
         return (
             <HeaderWrapper>
                 <Logo />
@@ -70,7 +70,7 @@ class Header extends Component {
                         >
                             <NavSearch
                                 className={focused ? 'focused' : ''}
-                                onFocus={handleInputFocus}
+                                onFocus={() => handleInputFocus(list)}
                                 onBlur={handleinputblur}
                             ></NavSearch>
                         </CSSTransition>
@@ -96,15 +96,15 @@ const mapStatetoProp = (state) => {
         focused: state.getIn(['header', 'focused']),
         list: state.getIn(['header', 'list']),
         page: state.getIn(['header', 'page']),
-        totalPage: state.getIn(['header','totalPage']),
+        totalPage: state.getIn(['header', 'totalPage']),
         mouseIn: state.getIn(['header', 'mouseIn'])
     }
 }
 
 const mapDispatchtoProp = (dispatch) => {
     return {
-        handleInputFocus() {
-            dispatch(getList());
+        handleInputFocus(list) {
+            (list.size === 0) && dispatch(getList());
             dispatch(searchFocus());
         },
         handleinputblur() {
@@ -116,10 +116,10 @@ const mapDispatchtoProp = (dispatch) => {
         handleMouseLeave() {
             dispatch(MouseLeave());
         },
-        handleChangePage(page,totalPage){
-            if(page<totalPage){
-                dispatch(ChangePage(page+1));
-            }else{
+        handleChangePage(page, totalPage) {
+            if (page < totalPage) {
+                dispatch(ChangePage(page + 1));
+            } else {
                 dispatch(ChangePage(1));
             }
         }
