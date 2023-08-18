@@ -11,6 +11,10 @@ float:left;
 margin-left:15px;
 padding-top:30px;
 width:625px;
+.banner-img{
+    width: 625px;
+    height: 400px;
+}
 `;
 
 export const HomeRight = styled.div`
